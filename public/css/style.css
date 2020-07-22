@@ -13,8 +13,8 @@ img {
     display: grid;
     /*background-color: beige;*/
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 350px;
-    grid-auto-rows: 300px;
+    grid-template-rows: max-content;
+    grid-auto-rows: max-content;
     gap: 5%;
     padding: 0 3% 0 3%;
 }

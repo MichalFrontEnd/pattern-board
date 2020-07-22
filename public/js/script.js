@@ -10,6 +10,7 @@
             username: "",
             file: null,
         }, /////data end
+
         mounted: function () {
             var self = this;
             axios
@@ -25,6 +26,7 @@
 
         methods: {
             handleClick: function (e) {
+                var self = this;
                 e.preventDefault();
                 console.log("THIS!", this);
 
@@ -38,9 +40,14 @@
                 axios
                     .post("/upload", formData)
                     .then(function (resp) {
+                        console.log(
+                            "self.images inside post/upliad: ",
+                            self.images
+                        );
                         console.log("Am I here?");
                         console.log("response form POST /upload: ", resp);
-                        images.unshift(formData);
+
+                        self.images.unshift(resp.data);
                         console.log("images after unshift attempt", images);
                     })
                     .catch(function (err) {

@@ -54,9 +54,9 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     //insert title, desc,username, url into db table
     if (req.file) {
         db.addImage(title, description, username, url)
-            .then(({ rows }) => {
-                console.log("rows in addImage: ", rows);
-                res.json(rows[0]);
+            .then((response) => {
+                console.log("rows in addImage: ", response.rows[0]);
+                res.json(response.rows[0]);
             })
             .catch((err) => {
                 console.log("error on addImage: ", err);
