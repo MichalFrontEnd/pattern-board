@@ -1,0 +1,30 @@
+img {
+    height: 300px;
+    width: 100%;
+    object-fit: contain;
+}
+
+.userinput {
+    margin-bottom: 5%;
+    margin-top: 5%;
+}
+
+.imggrid {
+    display: grid;
+    /*background-color: beige;*/
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 350px;
+    grid-auto-rows: 300px;
+    gap: 5%;
+    padding: 0 3% 0 3%;
+}
+
+#card {
+    display: flex;
+    flex-direction: column;
+    border: 1px midnightblue solid;
+    border-radius: 1%;
+    box-shadow: 4px 3px 8px 1px #969696;
+    width: 100%;
+    padding: 2%;
+}

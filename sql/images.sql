@@ -1,3 +1,6 @@
+-- psql caper-imageboard -f  sql/images.sql
+--sudo service postgresql start
+
 DROP TABLE IF EXISTS images;
 
 CREATE TABLE images(
