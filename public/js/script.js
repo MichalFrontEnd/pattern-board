@@ -5,7 +5,7 @@
         el: "#main",
         data: {
             images: [],
-            imageId: null,
+            //imageId: null,
             //part 4:
             //imageId= location.hash.slice(1),
             title: "",
@@ -89,20 +89,19 @@
         data: function () {
             return {};
         }, ////end of data
-        mounted: {
-            function() {
-                var self = this;
-                axios
-                    .get(`/curimgmodal/${self.currentImgId}`)
-                    .then(function (resp) {
-                        console.log("resp: ", resp);
-                        //self.images = resp.data;
-                    })
-                    .catch(function (err) {
-                        console.log("error in AXIOS/ get images:", err);
-                    });
-            },
-            methods: {}, /////methods end
+        mounted: function () {
+            var self = this;
+            console.log("self.currentImgID: ", self.currentImgID);
+            axios
+                .get(`/curimgmodal/${self.currentImgId}`)
+                .then(function (resp) {
+                    console.log("resp: ", resp);
+                    //self.images = resp.data;
+                })
+                .catch(function (err) {
+                    console.log("error in AXIOS/ get images:", err);
+                });
         }, //////mounted ends
+        methods: {}, /////methods end
     }); ///end of modal-comp
 })();

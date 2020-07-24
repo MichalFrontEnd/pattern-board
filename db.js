@@ -18,8 +18,18 @@ module.exports.addImage = (title, description, username, url) => {
 };
 
 module.exports.getImgInfo = (id) => {
-    let q =
-        "SELECT title, description, images.created_at AS imgtimestamp, comments.username, comment, comments.created_at AS comtimestamp JOIN comments ON images.id=comments.image_id WHERE images.id = $1";
+    let q = `SELECT title, description,
+        images.created_at AS imgtimestamp,
+        comments.username, comment, comments.created_at AS comtimestamp
+        FROM images
+        JOIN comments ON images.id = comments.image_id
+        WHERE images.id = $1`;
     let params = [id];
     return db.query(q, params);
 };
+
+//module.exports.getImgInfo = (id) => {
+//    let q = "SELECT * FROM images WHERE id = $1";
+//    let params = [id];
+//    return db.query(q, params);
+//};
