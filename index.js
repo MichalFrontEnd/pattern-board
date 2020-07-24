@@ -66,8 +66,11 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     }
 });
 
-app.get("/modal", (req, res) => {
+app.get("/curimgmodal/:id", (req, res) => {
     ///here I will want to do a db select, or two
+    db.getImgInfo(req.params.id).then((results) => {
+        console.log("results: ", results);
+    });
 });
 
 app.listen(3000, () => console.log("The fall will hurt"));
