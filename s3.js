@@ -35,7 +35,7 @@ exports.upload = function (req, res, next) {
             // it worked!!!
             next();
             //to remove the file from the uploads folder:
-            fs.unlink(path, () => {});
+            //fs.unlink(path, () => {});
         })
         .catch((err) => {
             // uh oh

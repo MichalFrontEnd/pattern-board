@@ -1,7 +1,7 @@
 -- psql caper-imageboard -f  sql/images.sql
 --sudo service postgresql start
 
-DROP TABLE IF EXISTS images;
+DROP TABLE IF EXISTS images CASCADE;
 
 CREATE TABLE images(
     id SERIAL PRIMARY KEY,
@@ -11,6 +11,15 @@ CREATE TABLE images(
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+DROP TABLE IF EXISTS comments CASCADE;
+  CREATE TABLE comments(
+      id SERIAL PRIMARY KEY,
+      username VARCHAR NOT NULL,
+      comment VARCHAR NOT NULL,
+      image_id INT NOT NULL REFERENCES images(id),
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
 
 INSERT INTO images (url, username, title, description) VALUES (
     'https://s3.amazonaws.com/spicedling/jAVZmnxnZ-U95ap2-PLliFFF7TO0KqZm.jpg',

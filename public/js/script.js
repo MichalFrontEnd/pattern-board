@@ -16,7 +16,7 @@
             axios
                 .get("/images")
                 .then(function (resp) {
-                    console.log("resp.data: ", resp.data);
+                    //console.log("resp.data: ", resp.data);
                     self.images = resp.data;
                 })
                 .catch(function (err) {
@@ -41,14 +41,17 @@
                     .post("/upload", formData)
                     .then(function (resp) {
                         console.log(
-                            "self.images inside post/upliad: ",
+                            "self.images inside post/upload: ",
                             self.images
                         );
-                        console.log("Am I here?");
+                        //console.log("Am I here?");
                         console.log("response form POST /upload: ", resp);
 
                         self.images.unshift(resp.data);
-                        console.log("images after unshift attempt", images);
+                        console.log(
+                            "images after unshift attempt",
+                            self.images
+                        );
                     })
                     .catch(function (err) {
                         console.log("err in Post /upload", err);
@@ -59,6 +62,25 @@
                 console.log("file: ", e.target.files[0]);
                 this.file = e.target.files[0];
             }, //handleChange end
+            modalChange: function (data) {
+                console.log("change has occured");
+            }, //////modalChange end
+            showModal: function () {
+                console.log("click handled");
+                modalVisible = true;
+            }, ////showModal end
         }, //methods end
-    });
+    }); //Main vue end
+
+    Vue.component("modal-comp", {
+        template: "#modal-temp",
+        props: ["currentImgId"],
+        data: function () {
+            return console.log("placeholder");
+        }, ////end of data
+        methods: {}, /////methods end
+        //data: {
+        //    console.log("so it won't be empty");},}
+        //methods: {},////end of methods
+    }); ///end of modal-comp
 })();

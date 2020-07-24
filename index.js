@@ -8,6 +8,8 @@ app.use(express.static("public"));
 
 app.use(express.urlencoded({ extended: false }));
 
+app.use(express.json());
+
 ///////FIle UPLOAD BOILERPLATE DON'T TOUCH!!//////
 const multer = require("multer");
 const uidSafe = require("uid-safe");
@@ -62,6 +64,10 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
                 console.log("error on addImage: ", err);
             });
     }
+});
+
+app.get("/modal", (req, res) => {
+    ///here I will want to do a db select, or two
 });
 
 app.listen(3000, () => console.log("The fall will hurt"));

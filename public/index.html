@@ -19,17 +19,24 @@
         <button @click="handleClick">submit</button>
 
         </div>
+        
         <div class="imggrid">
             <div id="card" v-for="each in images">
-                <img :src=each.url :alt=each.description>
+                <img @click="showModal" :src=each.url :alt=each.description>
                 <!--<img src="{{each.url}}">-->
                 <p>{{each.title}}</p>
-                <p>{{each.description}}</p>
-
+                <!--<p>{{each.description}}</p>-->
             </div>
         </div>
-    </div>
+        <modal-comp @change="modalChange"></modal-comp>
+    </div> 
+    <!-- end of main element -->
+    
+    <script id="modal-temp" type="text/x-template">
+        <div class="overlay">
 
+        </div>
+    </script>
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
     <script src="/js/script.js"></script>
