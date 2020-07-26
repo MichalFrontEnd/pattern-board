@@ -13,7 +13,7 @@
             username: "",
             file: null,
             //currentImgId: "",
-            currentImgId: location.hash.slice(1),
+            currentImgId: "",
         }, /////data end
 
         mounted: function () {
@@ -58,7 +58,7 @@
                     });
             }, //handleClick end
             handleChange: function (e) {
-                console.log("handleChange is running");
+                //console.log("handleChange is running");
                 this.file = e.target.files[0];
             }, //handleChange end
             modalChange: function () {
@@ -142,6 +142,9 @@
             currentImgId: function () {
                 var self = this;
                 self.currentImgId = location.hash.slice(1);
+                if (!self.currentImgID) {
+                    this.$emit("close", this.currentImgID);
+                }
                 //axios
                 //    .get("/images")
                 //    .then(function (resp) {
