@@ -57,7 +57,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     if (req.file) {
         db.addImage(title, description, username, url)
             .then((response) => {
-                //console.log("rows in addImage: ", response.rows[0]);
+                console.log("rows in addImage: ", response.rows[0]);
                 res.json(response.rows[0]);
             })
             .catch((err) => {
@@ -93,7 +93,7 @@ app.get("/curimgmodal/:id", (req, res) => {
 });
 
 app.post("/addcomment/:id", (req, res) => {
-    console.log("req.body", req.body);
+    //console.log("req.body", req.body);
     db.addNewComment(req.body.comment_un, req.body.new_comment, req.params.id)
         .then((results) => {
             //console.log("results in addComment: ", results);
@@ -104,4 +104,14 @@ app.post("/addcomment/:id", (req, res) => {
         });
 });
 
+app.get("/loadmore", (req, res) => {
+    //let {smallestId}
+    //console.log("req in load more: ", req);
+    //console.log("req.query[0]: ", req.query[0]);
+
+    db.getMoreImages(req.query[0]).then((results) => {
+        //console.log("results in loadmore: ", results.rows);
+        res.json(results.rows);
+    });
+});
 app.listen(3000, () => console.log("The fall will hurt"));

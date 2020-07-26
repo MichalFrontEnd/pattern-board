@@ -67,8 +67,36 @@
                 console.log("click handled");
                 this.currentImgId = id;
             }, ////showModal end
-            showMore: function () {
+            showMore: function (e) {
                 e.preventDefault();
+                var self = this;
+                var lowestOnPageId = self.images[self.images.length - 1].id;
+                //console.log("lowestId: ", lowestOnPageId);
+
+                axios
+                    .get("/loadmore", { params: lowestOnPageId })
+                    .then(function (resp) {
+                        for (var i = 0; i < resp.data.length; i++) {
+                            self.images.push(resp.data[i]);
+                        }
+                        lowestOnPageId = self.images[self.images.length - 1].id;
+                        if (lowestOnPageId === resp.data[0].lowestId) {
+                            console.log("reached first photo!");
+                            moreButton = document.getElementsByClassName(
+                                "more_button"
+                            );
+                            moreButton[0].classList.add("hidemore");
+                        }
+
+                        console.log(
+                            "lowestOnPageId after 'more': ",
+                            lowestOnPageId
+                        );
+                        console.log("resp.data in loadmore: ", resp.data);
+                        //`/curimgmodal/${self.currentImgId}`
+                        //console.log("response form POST /upload: ", resp);
+                    });
+                //var smallestId = self.
             }, //////showMore ends
         }, //methods end
     }); //Main vue end

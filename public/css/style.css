@@ -93,6 +93,10 @@ img {
     margin-bottom: 10%;
 }
 
+.hidemore {
+    visibility: hidden;
+}
+
 #modalimg {
     height: 100%;
 }
