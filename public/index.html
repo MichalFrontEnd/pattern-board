@@ -23,12 +23,11 @@
         
         <div class="imggrid">
             <div id="card" v-for="each in images">
-            <!--<a :href= "'#'+ each.id">-->
-                <img @click="showModal(each.id)" :src=each.url :alt=each.description :imageid=each.id>
+            <a :href= "'#'+ each.id">
+                <img :src=each.url :alt=each.description :imageid=each.id>
                 <!--<img src="{{each.url}}">-->
                 <p>{{each.title}}</p>
-                <!--<p>{{each.description}}</p>-->
-                <!--</a>-->
+                </a>
             </div>
         </div>
 
