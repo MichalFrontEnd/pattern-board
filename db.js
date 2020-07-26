@@ -5,7 +5,15 @@ const db = spicedPg(
 );
 
 module.exports.getImages = () => {
-    let q = "SELECT * FROM images ORDER BY id DESC";
+    //let q = "SELECT * FROM images ORDER BY id DESC LIMIT 3";
+    let q = `SELECT *, (
+        SELECT id FROM images
+    ORDER BY id ASC
+    LIMIT 1
+) AS "lowestId" FROM images
+    WHERE id < $1
+    ORDER BY id DESC
+    LIMIT 3`;
     return db.query(q);
 };
 
@@ -17,19 +25,31 @@ module.exports.addImage = (title, description, username, url) => {
     return db.query(q, params);
 };
 
+//module.exports.getImgInfo = (id) => {
+//    let q = `SELECT title, description,
+//        images.created_at AS imgtimestamp,
+//        comments.username, comment, comments.created_at AS comtimestamp
+//        FROM images
+//        JOIN comments ON images.id = comments.image_id
+//        WHERE images.id = $1`;
+//    let params = [id];
+//    return db.query(q, params);
+//};
+
 module.exports.getImgInfo = (id) => {
-    let q = `SELECT title, description,
-        images.created_at AS imgtimestamp,
-        comments.username, comment, comments.created_at AS comtimestamp
-        FROM images
-        JOIN comments ON images.id = comments.image_id
-        WHERE images.id = $1`;
+    let q = "SELECT * FROM images WHERE id = $1";
     let params = [id];
     return db.query(q, params);
 };
 
-//module.exports.getImgInfo = (id) => {
-//    let q = "SELECT * FROM images WHERE id = $1";
-//    let params = [id];
-//    return db.query(q, params);
-//};
+module.exports.getCommentInfo = (id) => {
+    let q = "SELECT * FROM comments WHERE image_id = $1";
+    let params = [id];
+    return db.query(q, params);
+};
+
+module.exports.addNewComment = (username, comment, image_id) => {
+    let q = `INSERT INTO comments (comment_un, new_comment, image_id) VALUES ($1, $2, $3) RETURNING *`;
+    let params = [username, comment, image_id];
+    return db.query(q, params);
+};

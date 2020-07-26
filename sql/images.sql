@@ -1,4 +1,4 @@
--- psql caper-imageboard -f  sql/images.sql
+-- psql caper-imageboard -f sql/images.sql
 --sudo service postgresql start
 
 DROP TABLE IF EXISTS images CASCADE;
@@ -15,8 +15,8 @@ CREATE TABLE images(
 DROP TABLE IF EXISTS comments CASCADE;
   CREATE TABLE comments(
       id SERIAL PRIMARY KEY,
-      username VARCHAR NOT NULL,
-      comment VARCHAR NOT NULL,
+      comment_un VARCHAR NOT NULL,
+      new_comment VARCHAR NOT NULL,
       image_id INT NOT NULL REFERENCES images(id),
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );

@@ -1,3 +1,17 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+body {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 img {
     height: 300px;
     width: 100%;
@@ -27,4 +41,58 @@ img {
     box-shadow: 4px 3px 8px 1px #969696;
     width: 100%;
     padding: 2%;
+}
+
+.more_button {
+    margin-top: 10%;
+    margin-bottom: 10%;
+    display: flex;
+
+    align-items: center;
+}
+
+.overlay {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.modal {
+    height: auto;
+    width: 80%;
+    background-color: lightblue;
+    align-self: center;
+    border: 3px black solid;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    /*padding-top: 10%;*/
+    /*justify-content: space-around;*/
+    padding-bottom: 10%;
+    justify-content: space-between;
+}
+
+.image-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /*margin-bottom: 10%;*/
+}
+
+.comment_sec {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 10%;
+}
+
+#modalimg {
+    height: 100%;
 }

@@ -7,8 +7,9 @@
 </head>
 
 <body>
-    <h1>My Imageboard</h1>
-
+    <header>
+        <h1>My Imageboard</h1>
+    </header>
     <div id="main">
         <div class="userinput">
         <input v-model="title" type="text" name="title" placeholder="title">
@@ -30,14 +31,43 @@
                 <!--</a>-->
             </div>
         </div>
-        <modal-comp v-if="currentImgId" :current-img-id="currentImgId" @change="modalChange"></modal-comp>
+
+        <button class="more_button" @click="showMore">Gimme more!</button>
+
+
+        <modal-comp v-if="currentImgId" :current-img-id="currentImgId" @close="modalChange"></modal-comp>
         <!--@close="closeModal-->
     </div> 
     <!-- end of main element -->
     
     <script id="modal-temp" type="text/x-template">
-        <div class="overlay">
+        <div class="overlay" @click="emitCloseEvent">
+            <div class="modal" @click.stop>
+                <div class="image_section">
+                <!--<div class="image_section" v-for="each in image_info">-->
+                <!--<h2>{{each.title}}</h2>-->
+                <h2>{{title}}</h2>
+                <!--<img :id=modalimg :src=each.url>-->
+                <div id="modalimg">
+                    <img  :src=url>
+                </div>
+                
+                <h5>{{description}}</h5>
+                <p>uploaded by {{username}} on {{created_at}}</p>
+                </div>
+                <div class="add_comment">
+                    <input v-model="new_comment" type="text" name="comment" placeholder="Enter comment!">
+                    <input v-model="comment_un" type="text" name="username" placeholder="Enter a username">
 
+                    <button @click="commentSubmit">submit</button>
+
+                </div>
+                <!--<div class="comment_sec" v-for="each in comments">-->
+                <div class="comment_sec" v-if="comments" v-for="each in comments">
+                    <p id="comment">{{each.new_comment}}</p>
+                    <p>{{each.comment_un}} on {{each.created_at}}</p>
+                </div>
+            </div>
         </div>
     </script>
     <script src="/js/vue.js"></script>

@@ -49,37 +49,27 @@
                 axios
                     .post("/upload", formData)
                     .then(function (resp) {
-                        //console.log(
-                        //    "self.images inside post/upload: ",
-                        //    self.images
-                        //);
-                        //console.log("Am I here?");
-                        console.log("response form POST /upload: ", resp);
-
+                        //console.log("response form POST /upload: ", resp);
                         self.images.unshift(resp.data);
-                        console.log(
-                            "images after unshift attempt",
-                            self.images
-                        );
                     })
                     .catch(function (err) {
                         console.log("err in Post /upload", err);
                     });
             }, //handleClick end
             handleChange: function (e) {
-                //console.log("handleChange is running");
-                //console.log("file: ", e.target.files[0]);
+                console.log("handleChange is running");
                 this.file = e.target.files[0];
             }, //handleChange end
-            modalChange: function (data) {
-                console.log("change has occured");
+            modalChange: function () {
+                this.currentImgId = "";
             }, //////modalChange end
             showModal: function (id) {
                 console.log("click handled");
-                //modalVisible = true;
                 this.currentImgId = id;
-                //console.log("currentImgId: ", currentImgId);
             }, ////showModal end
+            showMore: function () {
+                e.preventDefault();
+            }, //////showMore ends
         }, //methods end
     }); //Main vue end
 
@@ -87,21 +77,67 @@
         template: "#modal-temp",
         props: ["currentImgId"],
         data: function () {
-            return {};
+            return {
+                //image_info: [],
+                //comments: [],
+                title: "",
+                url: "",
+                username: "",
+                description: "",
+                created_at: "",
+                comment: "",
+                comment_un: "",
+                comment_co: "",
+                //new_comment: "",
+                //new_comment_un: "",
+                //new_comment_co: "",
+                comments: [],
+            };
         }, ////end of data
         mounted: function () {
             var self = this;
-            console.log("self.currentImgID: ", self.currentImgID);
+            //console.log("self.currentImgID: ", self.currentImgID);
             axios
                 .get(`/curimgmodal/${self.currentImgId}`)
                 .then(function (resp) {
-                    console.log("resp: ", resp);
-                    //self.images = resp.data;
+                    //self.image_info.push(resp.data[0]);
+                    //self.comments.push(resp.data[1]);
+                    //console.log("self: ", self);
+                    self.title = resp.data[0].title;
+                    self.url = resp.data[0].url;
+                    self.username = resp.data[0].username;
+                    self.description = resp.data[0].description;
+                    self.created_at = resp.data[0].created_at;
+
+                    self.comments = resp.data[1];
+                    console.log("self.comments: ", self.comments);
                 })
                 .catch(function (err) {
                     console.log("error in AXIOS/ get images:", err);
                 });
         }, //////mounted ends
-        methods: {}, /////methods end
+        methods: {
+            emitCloseEvent: function (e) {
+                //console.log("shroud clicked!");
+                this.$emit("close", this.currentImgID);
+            }, //////emitCloseEvent end
+            commentSubmit: function (e) {
+                var self = this;
+                e.preventDefault();
+                axios
+                    .post(`/addcomment/${self.currentImgId}`, {
+                        comment_un: this.comment_un,
+                        new_comment: this.new_comment,
+                    })
+                    .then(function (resp) {
+                        self.comments.unshift(resp.data);
+                        //console.log("resp in addComment", resp.data);
+                        //console.log("self.comments: ", self.comments);
+                    })
+                    .catch(function (err) {
+                        console.log("err in Post /upload", err);
+                    });
+            }, ///////commentSubmit end
+        }, /////methods end
     }); ///end of modal-comp
 })();
