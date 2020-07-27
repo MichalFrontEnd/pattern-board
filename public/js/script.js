@@ -29,8 +29,9 @@
                 });
 
             window.addEventListener("hashchange", function () {
-                //console.log("something in the hash changed");
+                console.log("something in the hash changed");
                 self.currentImgId = location.hash.slice(1);
+
                 //when modal closes we need to set the url after the hash to an empty string, also for errors (in catches).
             });
         }, /////mounted ends
@@ -65,6 +66,12 @@
                 this.currentImgId = "";
                 location.hash = "";
             }, //////modalChange end
+            //imgIdChange: function () {
+            //    console.log("change in image number");
+            //    if (!self.currentImgID) {
+            //        this.$emit("close", this.currentImgID);
+            //    }
+            //}, ///imgIdChange end
             showModal: function (id) {
                 console.log("click handled");
                 this.currentImgId = id;
@@ -89,10 +96,8 @@
                             );
                             moreButton[0].classList.add("hidemore");
                         }
-                        //`/curimgmodal/${self.currentImgId}`
                         //console.log("response form POST /upload: ", resp);
                     });
-                //var smallestId = self.
             }, //////showMore ends
         }, //methods end
     }); //Main vue end
@@ -113,71 +118,44 @@
                 comment_un: "",
                 comment_co: "",
                 comments: [],
-                currentImgId: location.hash.slice(1),
+                //currentImgId: location.hash.slice(1),
+                new_comment: "",
             };
         }, ////end of data
         mounted: function () {
-            var self = this;
-            //console.log("self.currentImgID: ", self.currentImgID);
-            axios
-                .get(`/curimgmodal/${self.currentImgId}`)
-                .then(function (resp) {
-                    //self.image_info.push(resp.data[0]);
-                    //self.comments.push(resp.data[1]);
-                    //console.log("self: ", self);
-                    self.title = resp.data[0].title;
-                    self.url = resp.data[0].url;
-                    self.username = resp.data[0].username;
-                    self.description = resp.data[0].description;
-                    self.created_at = resp.data[0].created_at;
-
-                    self.comments = resp.data[1];
-                    console.log("self.comments: ", self.comments);
-                })
-                .catch(function (err) {
-                    console.log("error in AXIOS/ get images:", err);
-                });
+            this.getInfo();
         }, //////mounted ends
         watch: {
             currentImgId: function () {
-                var self = this;
-                self.currentImgId = location.hash.slice(1);
-                if (!self.currentImgID) {
-                    this.$emit("close", this.currentImgID);
-                }
+                this.getInfo();
+                console.log("is this running?");
+                //var self = this;
+                //self.currentImgId = location.hash.slice(1);
+
                 //axios
-                //    .get("/images")
+                //    .get(`/curimgmodal/${self.currentImgId}`)
                 //    .then(function (resp) {
-                //        console.log("resp.data: ", resp.data);
-                //        self.images = resp.data;
+                //        //self.image_info.push(resp.data[0]);
+                //        //self.comments.push(resp.data[1]);
+                //        //console.log("self: ", self);
+                //        self.title = resp.data[0].title;
+                //        self.url = resp.data[0].url;
+                //        self.username = resp.data[0].username;
+                //        self.description = resp.data[0].description;
+                //        self.created_at = resp.data[0].created_at;
+
+                //        self.comments = resp.data[1];
+                //        //console.log("self.comments: ", self.comments);
+                //        if (!self.title) {
+                //            this.$emit("close");
+                //        }
                 //    })
                 //    .catch(function (err) {
                 //        console.log("error in AXIOS/ get images:", err);
-                //    });
-
-                //window.addEventListener("hashchange", function () {
-                //    console.log("something in the hash changed");
-                //    self.currentImgId = location.hash.slice(1);
-                //when modal closes we need to set the url after the hash to an empty string, also for errors (in catches).
+                //        //if (!resp.data) {
+                //    this.$emit("close");
+                //}
                 //});
-                axios
-                    .get(`/curimgmodal/${self.currentImgId}`)
-                    .then(function (resp) {
-                        //self.image_info.push(resp.data[0]);
-                        //self.comments.push(resp.data[1]);
-                        //console.log("self: ", self);
-                        self.title = resp.data[0].title;
-                        self.url = resp.data[0].url;
-                        self.username = resp.data[0].username;
-                        self.description = resp.data[0].description;
-                        self.created_at = resp.data[0].created_at;
-
-                        self.comments = resp.data[1];
-                        console.log("self.comments: ", self.comments);
-                    })
-                    .catch(function (err) {
-                        console.log("error in AXIOS/ get images:", err);
-                    });
             }, //////imgChange end
         }, //////watch ends
         methods: {
@@ -202,6 +180,36 @@
                         console.log("err in Post /upload", err);
                     });
             }, ///////commentSubmit end
+            getInfo: function () {
+                var self = this;
+                //console.log("self.currentImgID: ", self.currentImgID);
+                self.currentImgId = location.hash.slice(1);
+                axios
+                    .get(`/curimgmodal/${self.currentImgId}`)
+                    .then(function (resp) {
+                        //self.image_info.push(resp.data[0]);
+                        //self.comments.push(resp.data[1]);
+                        //console.log("self: ", self);
+                        self.title = resp.data[0].title;
+                        self.url = resp.data[0].url;
+                        self.username = resp.data[0].username;
+                        self.description = resp.data[0].description;
+                        self.created_at = resp.data[0].created_at;
+                        self.comments = resp.data[1];
+
+                        if (resp.data.length === 0) {
+                            self.$emit("close");
+                            //self.currentImgId = "";
+                            //location.hash = "";
+                        }
+                    })
+
+                    .catch(function (err) {
+                        console.log("error in AXIOS/ get images:", err);
+
+                        self.$emit("close");
+                    });
+            },
         }, /////methods end
     }); ///end of modal-comp
 })();

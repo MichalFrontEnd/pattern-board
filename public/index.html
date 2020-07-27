@@ -9,6 +9,9 @@
 <body>
     <header>
         <h1>My Imageboard</h1>
+        <a href="https://www.pinterest.com/pin/create/button/" data-pin-do="buttonPin"  data-pin-color="red">
+        </a>
+
     </header>
     <div id="main">
         <div class="userinput">
@@ -24,7 +27,7 @@
         <div class="imggrid">
             <div id="card" v-for="each in images">
             <a :href= "'#'+ each.id">
-                <img :src=each.url :alt=each.description :imageid=each.id>
+                <img :src=each.url :alt=each.description :imageid=each.id >
                 <!--<img src="{{each.url}}">-->
                 <p>{{each.title}}</p>
                 </a>
@@ -69,6 +72,7 @@
             </div>
         </div>
     </script>
+    <script type="text/javascript" async defer src="//assets.pinterest.com/js/pinit.js"></script>
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
     <script src="/js/script.js"></script>
