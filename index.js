@@ -35,29 +35,19 @@ const uploader = multer({
 //////END BOILERPLATE///////////
 
 app.get("/images", (req, res) => {
-    //console.log("get/images has been hit!");
-
     db.getImages().then(function (response) {
-        //console.log("I passed getImages");
-        //console.log("response: ", response);
         res.json(response.rows);
     });
 });
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
-    //req.file is the file that was uploaded.
-    //req.body is the rest of the input fields.
-    //console.log("file: ", req.file);
-    //console.log("input: ", req.body);
     const { title, description, username } = req.body;
     const { filename } = req.file;
     const url = s3Url + filename;
 
-    //insert title, desc,username, url into db table
     if (req.file) {
         db.addImage(title, description, username, url)
             .then((response) => {
-                console.log("rows in addImage: ", response.rows[0]);
                 res.json(response.rows[0]);
             })
             .catch((err) => {
@@ -78,15 +68,6 @@ app.get("/curimgmodal/:id", (req, res) => {
             res.json([result1.rows[0], result2.rows]);
         })
 
-        //db.getImgInfo(req.params.id).then((results) => {
-        //    console.log("results: ", results.rows);
-        //    res.json(results.rows[0]);
-        //});
-        //db.getCommentInfo(req.params.id)
-        //    .then((results) => {
-        //        console.log("results: ", results.rows);
-        //        res.json(results.rows[0]);
-        //    })
         .catch((err) => {
             console.log("err in get ", err);
         });
@@ -105,12 +86,7 @@ app.post("/addcomment/:id", (req, res) => {
 });
 
 app.get("/loadmore", (req, res) => {
-    //let {smallestId}
-    //console.log("req in load more: ", req);
-    //console.log("req.query[0]: ", req.query[0]);
-
     db.getMoreImages(req.query[0]).then((results) => {
-        //console.log("results in loadmore: ", results.rows);
         res.json(results.rows);
     });
 });
