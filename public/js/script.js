@@ -14,10 +14,12 @@
             file: null,
             //currentImgId: "",
             currentImgId: "",
+            selected: "",
         }, /////data end
 
         mounted: function () {
             var self = this;
+
             axios
                 .get("/images")
                 .then(function (resp) {
@@ -43,11 +45,12 @@
                 e.preventDefault();
 
                 var formData = new FormData();
-
+                //console.log("this.selected: ", this.selected);
                 formData.append("title", this.title);
                 formData.append("description", this.description);
                 formData.append("username", this.username);
                 formData.append("file", this.file);
+                formData.append("selected", this.selected);
 
                 axios
                     .post("/upload", formData)
@@ -58,14 +61,15 @@
                     .catch(function (err) {
                         console.log("err in Post /upload", err);
                     });
-                console.log(
-                    //"self.$refs.imageInput before: ",
-                    self.$refs.imageInput
-                );
+                //console.log(
+                //    //"self.$refs.imageInput before: ",
+                //    self.$refs.imageInput
+                //);
                 self.title = "";
                 self.description = "";
                 self.username = "";
                 self.$refs.imageInput.value = "";
+                self.selected = "";
                 //console.log("self.$refs.imageInput after: ", self.$refs);
             }, //handleClick end
             handleChange: function (e) {
@@ -207,6 +211,8 @@
                     .catch(function (err) {
                         console.log("err in Post /upload", err);
                     });
+                self.comment_un = "";
+                self.new_comment = "";
             }, ///////commentSubmit end
             getInfo: function () {
                 var self = this;

@@ -8,12 +8,14 @@ body {
 
 button,
 #imageinput,
-input {
+input,
+select {
     border: 1px black solid;
     background-color: whitesmoke;
     font-family: "Lobster Two", cursive;
     border-radius: 0.3em;
     box-shadow: 2px 2px 4px 1px #969696;
+    margin-right: 1em;
     /*padding: 1%;*/
 }
 

@@ -9,11 +9,11 @@ module.exports.getImages = () => {
     return db.query(q);
 };
 
-module.exports.addImage = (title, description, username, url) => {
+module.exports.addImage = (title, description, username, url, pattern_type) => {
     let q =
-        "INSERT INTO images (title, description, username, url)  VALUES ($1, $2, $3, $4) RETURNING *";
+        "INSERT INTO images (title, description, username, url, pattern_type)  VALUES ($1, $2, $3, $4, $5) RETURNING *";
 
-    let params = [title, description, username, url];
+    let params = [title, description, username, url, pattern_type];
     return db.query(q, params);
 };
 

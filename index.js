@@ -41,12 +41,13 @@ app.get("/images", (req, res) => {
 });
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
-    const { title, description, username } = req.body;
+    console.log("req.body: ", req.body);
+    const { title, description, username, selected } = req.body;
     const { filename } = req.file;
     const url = s3Url + filename;
 
     if (req.file) {
-        db.addImage(title, description, username, url)
+        db.addImage(title, description, username, url, selected)
             .then((response) => {
                 res.json(response.rows[0]);
             })

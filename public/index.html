@@ -22,6 +22,31 @@
         <input v-model="title" type="text" name="title" placeholder="title">
         <input v-model="description" type="text" name="description" placeholder="description">
         <input v-model="username"  type="text" name="username" placeholder="username">
+        <select v-model="selected" name="pattern_type">
+            <option disabled value="">pattern type</option>
+            <option>Dots</option>
+            <option>Stripes</option>
+            <option>Plaid</option>
+            <option>Checkers</option>
+            <option>Floral</option>
+            <option>Leaves</option>
+            <option>Geometric</option>
+            <option>Vector Art</option>
+            <option>Damasque</option>
+            <option>Fruit</option>
+            <option>Other</option>
+        </select>
+        <!--<select v-model="selected">
+            <option disabled value="">pattern type</option>
+            <option v-bind:value="dots">Dots</option>
+            <option v-bind:value="stripes">Stripes</option>
+            <option v-bind:value="plaid">Plaid</option>
+            <option v-bind:value="floral">Floral</option>
+            <option v-bind:value="leaves">Leaves</option>
+            <option v-bind:value="geometric">Geometric</option>
+            <option v-bind:value="vector">Vector</option>
+            <option v-bind:value="other">Other</option>
+        </select>-->
         <input @change="handleChange" type="file" name="file" accept="image/*" ref="imageInput" id="imageinput">
 
         <button @click="handleClick">submit</button>
