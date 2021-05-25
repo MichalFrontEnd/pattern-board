@@ -36,17 +36,6 @@
             <option>Fruit</option>
             <option>Other</option>
         </select>
-        <!--<select v-model="selected">
-            <option disabled value="">pattern type</option>
-            <option v-bind:value="dots">Dots</option>
-            <option v-bind:value="stripes">Stripes</option>
-            <option v-bind:value="plaid">Plaid</option>
-            <option v-bind:value="floral">Floral</option>
-            <option v-bind:value="leaves">Leaves</option>
-            <option v-bind:value="geometric">Geometric</option>
-            <option v-bind:value="vector">Vector</option>
-            <option v-bind:value="other">Other</option>
-        </select>-->
         <input @change="handleChange" type="file" name="file" accept="image/*" ref="imageInput" id="imageinput">
 
         <button @click="handleClick">submit</button>
@@ -57,17 +46,10 @@
             <div id="card" v-for="each in images">
                 <a :href= "'#'+ each.id">
                     <img :src=each.url :alt=each.description :imageid=each.id >
-                    <!--<img src="{{each.url}}">-->
                     </a>
                     <p>{{each.title}}</p>
-                
             </div>
         </div>
-        
-        <!--<div class="button_container">
-            <button class="more_button" @click="showMore">Gimme more!</button>
-        </div>-->
-        <!--@close="closeModal-->
     </div> 
     <!-- end of main element -->
 
@@ -77,13 +59,8 @@
             <div class="modal" @click.stop >
                 <img class="border" src="/css/divtop.png">
                 <div class="image_section">
-                <!--<div class="image_section" v-for="each in image_info">-->
-                <!--<h2>{{each.title}}</h2>-->
                 <h1>{{title}}</h1>
-                <!--<img :id=modalimg :src=each.url>-->
-                <!--<div id="modalimg">-->
                     <img id="modalimg" :src=url>
-                <!--</div>-->
                 
                 <h3>{{description}}</h3>
                 <p>uploaded by {{username}} on {{created_at}}</p>
@@ -93,10 +70,8 @@
                     <input v-model="comment_un" type="text" name="username" placeholder="Enter a username">
 
                     <button @click="commentSubmit">submit</button>
-
                 </div>
                 
-                <!--<div class="comment_sec" v-for="each in comments">-->
                 <div class="comment_sec" v-if="comments" v-for="each in comments">
                     <img class="divider" src="/css/divtop.png">
                     <p id="comment">{{each.new_comment}}</p>
