@@ -58,14 +58,11 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 });
 
 app.get("/curimgmodal/:id", (req, res) => {
-    ///here I will want to do a db select, or two
     Promise.all([
         db.getImgInfo(req.params.id),
         db.getCommentInfo(req.params.id),
     ])
         .then(([result1, result2]) => {
-            //console.log("results: ", result2.rows);
-
             res.json([result1.rows[0], result2.rows]);
         })
 
@@ -75,10 +72,8 @@ app.get("/curimgmodal/:id", (req, res) => {
 });
 
 app.post("/addcomment/:id", (req, res) => {
-    //console.log("req.body", req.body);
     db.addNewComment(req.body.comment_un, req.body.new_comment, req.params.id)
         .then((results) => {
-            //console.log("results in addComment: ", results);
             res.json(results.rows[0]);
         })
         .catch((err) => {
