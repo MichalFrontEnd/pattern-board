@@ -17,16 +17,6 @@ module.exports.addImage = (title, description, username, url, pattern_type) => {
     return db.query(q, params);
 };
 
-//module.exports.getImgInfo = (id) => {
-//    let q = `SELECT title, description,
-//        images.created_at AS imgtimestamp,
-//        comments.username, comment, comments.created_at AS comtimestamp
-//        FROM images
-//        JOIN comments ON images.id = comments.image_id
-//        WHERE images.id = $1`;
-//    let params = [id];
-//    return db.query(q, params);
-//};
 
 module.exports.getImgInfo = (id) => {
     let q = "SELECT * FROM images WHERE id = $1";
@@ -47,8 +37,6 @@ module.exports.addNewComment = (username, comment, image_id) => {
 };
 
 module.exports.getMoreImages = (lastId) => {
-    //let q = `SELECT id, url, username, title, description, created_at, (
-
     let q = `SELECT *, (
         SELECT id FROM images
     ORDER BY id ASC
