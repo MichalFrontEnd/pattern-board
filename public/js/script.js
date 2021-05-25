@@ -1,18 +1,13 @@
-//console.log("script is linked")
 
 (function () {
     new Vue({
         el: "#main",
         data: {
             images: [],
-            //imageId: null,
-            //part 4:
-            //imageId= location.hash.slice(1),
             title: "",
             description: "",
             username: "",
             file: null,
-            //currentImgId: "",
             currentImgId: "",
             selected: "",
         }, /////data end
@@ -23,7 +18,6 @@
             axios
                 .get("/images")
                 .then(function (resp) {
-                    //console.log("resp.data: ", resp.data);
                     self.images = resp.data;
                 })
                 .catch(function (err) {
@@ -45,7 +39,6 @@
                 e.preventDefault();
 
                 var formData = new FormData();
-                //console.log("this.selected: ", this.selected);
                 formData.append("title", this.title);
                 formData.append("description", this.description);
                 formData.append("username", this.username);
@@ -55,25 +48,18 @@
                 axios
                     .post("/upload", formData)
                     .then(function (resp) {
-                        //console.log("response form POST /upload: ", resp);
                         self.images.unshift(resp.data);
                     })
                     .catch(function (err) {
                         console.log("err in Post /upload", err);
                     });
-                //console.log(
-                //    //"self.$refs.imageInput before: ",
-                //    self.$refs.imageInput
-                //);
                 self.title = "";
                 self.description = "";
                 self.username = "";
                 self.$refs.imageInput.value = "";
                 self.selected = "";
-                //console.log("self.$refs.imageInput after: ", self.$refs);
             }, //handleClick end
             handleChange: function (e) {
-                //console.log("handleChange is running");
                 this.file = e.target.files[0];
             }, //handleChange end
             modalChange: function () {
@@ -122,21 +108,7 @@
 
             scrollPos: function (image) {
                 var self = this;
-                //var self = this;
-                ////var lowestOnPageId = self.images[self.images.length - 1].id;
-                //console.log("self.images: ", self.images);
-                //console.log("lowestOnPageId: ", lowestOnPageId);
-                //console.log(
-                //    "document.documentElement.scrollTop: ",
-                //    document.documentElement.scrollTop
-                //);
-                //console.log("window.innerHeight: ", window.innerHeight);
-                //console.log(
-                //    "document.documentElement.offsetHeight: ",
-                //    document.documentElement.offsetHeight
-                //);
                 window.onscroll = function () {
-                    //var lowestOnPageId = self.images[self.images.length - 1].id;
                     var windowBottom =
                         document.documentElement.scrollTop +
                             window.innerHeight >
@@ -146,19 +118,7 @@
                         setTimeout(self.getMoreImgs(), 1000);
                     }
                 };
-                //if (
-                //    document.documentElement.scrollTop + window.innerHeight >=
-                //    document.documentElement.clientHeight - 100
-                //) {
-                //    console.log("let's scroll!");
-                //}
             }, ////end of scroll
-
-            //setDefault: function() {
-            //    this.title = "",
-            //    this.description = "",
-            //    this.username = "",
-            //}, ///setdeafult end
         }, //methods end
     }); //Main vue end
 
@@ -167,8 +127,6 @@
         props: ["currentImgId"],
         data: function () {
             return {
-                //image_info: [],
-                //comments: [],
                 title: "",
                 url: "",
                 username: "",
@@ -178,7 +136,6 @@
                 comment_un: "",
                 comment_co: "",
                 comments: [],
-                //currentImgId: location.hash.slice(1),
                 new_comment: "",
             };
         }, ////end of data
@@ -192,7 +149,6 @@
         }, //////watch ends
         methods: {
             emitCloseEvent: function (e) {
-                //console.log("shroud clicked!");
                 this.$emit("close", this.currentImgID);
             }, //////emitCloseEvent end
             commentSubmit: function (e) {
@@ -205,8 +161,6 @@
                     })
                     .then(function (resp) {
                         self.comments.unshift(resp.data);
-                        //console.log("resp in addComment", resp.data);
-                        //console.log("self.comments: ", self.comments);
                     })
                     .catch(function (err) {
                         console.log("err in Post /upload", err);
@@ -216,14 +170,10 @@
             }, ///////commentSubmit end
             getInfo: function () {
                 var self = this;
-                //console.log("self.currentImgID: ", self.currentImgID);
                 self.currentImgId = location.hash.slice(1);
                 axios
                     .get(`/curimgmodal/${self.currentImgId}`)
                     .then(function (resp) {
-                        //self.image_info.push(resp.data[0]);
-                        //self.comments.push(resp.data[1]);
-                        //console.log("self: ", self);
                         self.title = resp.data[0].title;
                         self.url = resp.data[0].url;
                         self.username = resp.data[0].username;
@@ -233,14 +183,11 @@
 
                         if (resp.data.length === 0) {
                             self.$emit("close");
-                            //self.currentImgId = "";
-                            //location.hash = "";
                         }
                     })
 
                     .catch(function (err) {
                         console.log("error in AXIOS/ get images:", err);
-
                         self.$emit("close");
                     });
             },
